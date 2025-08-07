@@ -8,41 +8,32 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-// State untuk LoginPage
 class _LoginPageState extends State<LoginPage> {
-  // Global key untuk mengakses dan memvalidasi Form
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // Variabel untuk mengatur visibilitas kata sandi
   bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Scaffold sebagai kerangka utama tampilan
       body: Center(
-        // Center untuk memposisikan Card di tengah layar
         child: Card(
-          elevation: 8, // Efek bayangan pada Card
+          elevation: 8,
           child: Container(
-            padding: const EdgeInsets.all(32.0), // Padding dalam Card
-            constraints: const BoxConstraints(
-              maxWidth: 350,
-            ), // Lebar maksimum Card
+            padding: const EdgeInsets.all(32.0),
+            constraints: const BoxConstraints(maxWidth: 350),
             child: Form(
-              key: _formKey, // Form untuk validasi input
+              key: _formKey,
               child: SingleChildScrollView(
-                // Agar tampilan bisa di-scroll jika layar kecil
                 child: Column(
-                  mainAxisSize: MainAxisSize.min, // Ukuran kolom mengikuti isi
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const FlutterLogo(size: 100), // Logo Flutter di atas form
-                    const SizedBox(height: 20), // Spasi vertikal
+                    const FlutterLogo(size: 100),
+                    const SizedBox(height: 20),
                     Text(
                       "Selamat Datang di Aplikasi Flutter!",
-                      style: Theme.of(context).textTheme.titleMedium, // Gaya teks dari tema
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox(height: 8), // Jarak bawah dari teks sambutan
+                    const SizedBox(height: 8),
 
                     // INPUT EMAIL
                     TextFormField(
@@ -57,52 +48,26 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.isEmpty) {
                           return 'Email tidak boleh kosong';
                         }
-                        final emailRegex =
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                        final emailValid = RegExp(emailRegex).hasMatch(value);
-                        if (!emailValid) {
+                        final emailRegex = RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                        if (!emailRegex.hasMatch(value)) {
                           return 'Format email tidak valid';
                         }
                         return null;
                       },
                     ),
-                                        // INPUT EMAIL
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        labelText: 'Email', // Label kolom
-                        hintText: 'Masukkan email', // Hint dalam kolom
-                        prefixIcon: Icon(
-                          Icons.email_outlined, // Icon email di depan
-                        ),
-                        border: OutlineInputBorder(), // Border kotak
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Email tidak boleh kosong';
-                        }
-                        final emailRegex =
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-                        final emailValid = RegExp(emailRegex).hasMatch(value);
-                        if (!emailValid) {
-                          return 'Format email tidak valid';
-                        }
-                        return null; // Jika valid
-                      },
-                    ),
 
-                    _gap(), // Spasi antar input
+                    _gap(),
 
                     // INPUT PASSWORD
                     TextFormField(
-                      obscureText: !_isPasswordVisible, // Jika false, password disembunyikan
+                      obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
                         labelText: 'Kata Sandi',
                         hintText: 'Masukkan kata sandi',
                         prefixIcon: const Icon(Icons.lock_outline_rounded),
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
-                          // Icon untuk toggle visibilitas kata sandi
                           icon: Icon(
                             _isPasswordVisible
                                 ? Icons.visibility_off
@@ -125,22 +90,21 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                     ),
-                                        _gap(), // Spasi bawah password
+
+                    _gap(),
 
                     // TOMBOL MASUK
                     SizedBox(
-                      width: double.infinity, // Tombol selebar container
+                      width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue, // Warna tombol biru
+                          backgroundColor: Colors.blue,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4), // Sudut tombol membulat
+                            borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                         onPressed: () {
-                          // Cek validasi form sebelum lanjut
                           if (_formKey.currentState?.validate() ?? false) {
-                            // Navigasi ke halaman Home jika login berhasil
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -150,18 +114,18 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         child: const Padding(
-                          padding: EdgeInsets.all(10.0), // Padding dalam tombol
+                          padding: EdgeInsets.all(10.0),
                           child: Text(
                             'Masuk',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white, // Warna teks putih untuk kontras
+                              color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -172,8 +136,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Widget helper untuk spasi antar elemen
   Widget _gap() => const SizedBox(height: 16);
 }
-
-
