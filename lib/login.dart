@@ -27,13 +27,13 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const FlutterLogo(size: 100),
+                    Image.asset('assets/logoo.jpg', width: 200, height: 200,),
                     const SizedBox(height: 20),
                     Text(
-                      "Selamat Datang di Aplikasi Flutter!",
+                      "Selamat Datang di Aplikasi Zrack.",
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
 
                     // INPUT EMAIL
                     TextFormField(
@@ -49,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
                           return 'Email tidak boleh kosong';
                         }
                         final emailRegex = RegExp(
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                        );
                         if (!emailRegex.hasMatch(value)) {
                           return 'Format email tidak valid';
                         }

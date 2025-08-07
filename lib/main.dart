@@ -19,8 +19,10 @@ class MainApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
         ), // Skema warna utama
       ),
-      debugShowCheckedModeBanner: false, // Menghilangkan banner debug di pojok kanan atas
-      home: LoginPage(), // Menentukan halaman pertama yang muncul saat aplikasi dibuka
+      debugShowCheckedModeBanner:
+          false, // Menghilangkan banner debug di pojok kanan atas
+      home:
+          LoginPage(), // Menentukan halaman pertama yang muncul saat aplikasi dibuka
     );
   }
 }

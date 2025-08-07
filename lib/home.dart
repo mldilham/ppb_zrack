@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     Center(child: Text('Ini halaman Beranda')), // Index 0
     Center(child: Text('Ini halaman Bookmark')), // Index 1
     Center(child: Text('Ini halaman Cart')), // Index 2
-    Center(child: Text('Ini halaman Profile')), // Index 3
+    const Profile(), // Index 3
   ];
 
   @override
@@ -25,9 +26,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Aplikasi Flutter'), // Judul di AppBar
       ),
-      body: _pages[_selectedIndex], // Menampilkan halaman sesuai index yang dipilih
+      body:
+          _pages[_selectedIndex], // Menampilkan halaman sesuai index yang dipilih
       bottomNavigationBar: NavigationBar(
-        animationDuration: const Duration(milliseconds: 300), // Animasi saat berpindah tab
+        animationDuration: const Duration(
+          milliseconds: 300,
+        ), // Animasi saat berpindah tab
         selectedIndex: _selectedIndex, // Menentukan tab yang aktif
         onDestinationSelected: (index) {
           // Saat salah satu tab dipilih
