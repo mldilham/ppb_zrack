@@ -8,42 +8,35 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-// Kelas State yang menyimpan data dinamis untuk HomePage
+// State yang menyimpan data dinamis untuk HomePage
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // Variabel untuk menyimpan indeks tab yang aktif
+  int _selectedIndex = 0; // Index tab aktif
 
-  // Daftar widget halaman yang ditampilkan berdasarkan tab yang dipilih
+  // Halaman sesuai tab
   final List<Widget> _pages = const [
     Center(child: Text('Ini halaman Beranda')), // Index 0
     Center(child: Text('Ini halaman Bookmark')), // Index 1
     Center(child: Text('Ini halaman Cart')), // Index 2
-    const Profile(), // Index 3
+    Profile(), // Index 3
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Aplikasi Flutter'), // Judul di AppBar
-      ),
-      body:
-          _pages[_selectedIndex], // Menampilkan halaman sesuai index yang dipilih
+      appBar: AppBar(title: const Text('Zrack Berkah'), centerTitle: true),
+      body: _pages[_selectedIndex], // Tampilkan halaman sesuai index
       bottomNavigationBar: NavigationBar(
-        animationDuration: const Duration(
-          milliseconds: 300,
-        ), // Animasi saat berpindah tab
-        selectedIndex: _selectedIndex, // Menentukan tab yang aktif
+        animationDuration: const Duration(milliseconds: 300),
+        selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
-          // Saat salah satu tab dipilih
           setState(() {
-            _selectedIndex = index; // Perbarui index dan render ulang halaman
+            _selectedIndex = index; // Update tab aktif
           });
         },
         destinations: const [
-          // Daftar item pada NavigationBar
           NavigationDestination(
-            icon: Icon(Icons.home_outlined), // Icon default
-            selectedIcon: Icon(Icons.home_rounded), // Icon saat aktif
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home_rounded),
             label: 'Beranda',
           ),
           NavigationDestination(

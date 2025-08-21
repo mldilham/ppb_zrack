@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/editp.dart';
 import 'package:project/login.dart';
+import 'package:project/profile.dart';
 // import 'package:my_application_1/screens/login.dart';
 
 void main() {
@@ -12,17 +14,18 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Aplikasi Flutter', // Judul aplikasi (muncul di task switcher)
+      title: 'Aplikasi Flutter',
       theme: ThemeData(
-        // Mengatur tema aplikasi
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ), // Skema warna utama
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      debugShowCheckedModeBanner:
-          false, // Menghilangkan banner debug di pojok kanan atas
-      home:
-          LoginPage(), // Menentukan halaman pertama yang muncul saat aplikasi dibuka
+      debugShowCheckedModeBanner: false,
+      // home: Profile(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/profile': (context) => const Profile(),
+        '/editp': (context) => const EditProfile(),
+      },
     );
   }
 }
