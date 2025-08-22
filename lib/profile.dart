@@ -84,51 +84,30 @@ class Profile extends StatelessWidget {
           Positioned(
             top: 40,
             right: 16,
-            child: PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, color: Colors.black),
-              onSelected: (value) {
-                if (value == "settings") {
-                  Navigator.pushNamed(context, '/settings');
-                } else if (value == "privacy") {
-                  Navigator.pushNamed(context, '/privacy');
-                } else if (value == "help") {
-                  Navigator.pushNamed(context, '/help');
-                } else if (value == "about") {
-                  Navigator.pushNamed(context, '/about');
-                } else if (value == "logout") {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text("Konfirmasi Logout"),
-                      content: const Text("Apakah yakin ingin keluar?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text("Batal"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pushReplacementNamed(context, '/login');
-                          },
-                          child: const Text("Ya"),
-                        ),
-                      ],
-                    ),
-                  );
-                }
+            child: IconButton(
+              icon: const Icon(Icons.logout, color: Colors.black),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Konfirmasi Logout"),
+                    content: const Text("Apakah yakin ingin keluar?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("Batal"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text("Ya"),
+                      ),
+                    ],
+                  ),
+                );
               },
-              itemBuilder: (context) => [
-                const PopupMenuItem(value: "settings", child: Text("Settings")),
-                const PopupMenuItem(value: "privacy", child: Text("Privacy")),
-                const PopupMenuItem(
-                  value: "help",
-                  child: Text("Help & Support"),
-                ),
-                const PopupMenuItem(value: "about", child: Text("About")),
-                const PopupMenuDivider(),
-                const PopupMenuItem(value: "logout", child: Text("Logout")),
-              ],
             ),
           ),
         ],

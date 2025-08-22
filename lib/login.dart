@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/api_service.dart';
 import 'package:project/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,7 +11,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ApiService apiService = ApiService();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +34,25 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('assets/logoo.jpg', width: 200, height: 200,),
+                    // Logo
+                    Image.asset(
+                      'assets/logoo.jpg',
+                      width: 200,
+                      height: 200,
+                    ),
                     const SizedBox(height: 20),
+
+                    // Title
                     Text(
                       "Selamat Datang di Aplikasi Zrack.",
                       style: Theme.of(context).textTheme.titleMedium,
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 16),
 
-                    // INPUT EMAIL
+                    // Input Email
                     TextFormField(
+                      controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         labelText: 'Email',
@@ -60,8 +76,9 @@ class _LoginPageState extends State<LoginPage> {
 
                     _gap(),
 
-                    // INPUT PASSWORD
+                    // Input Password
                     TextFormField(
+                      controller: passwordController,
                       obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
                         labelText: 'Kata Sandi',
@@ -94,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     _gap(),
 
-                    // TOMBOL MASUK
+                    
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -104,27 +121,52 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomePage(),
+                        onPressed: _isLoading
+                            ? null
+                            : () async {
+                                if (_formKey.currentState?.validate() ?? false) {
+                                  setState(() => _isLoading = true);
+                                  try {
+                                    String token = await apiService.login(
+                                      emailController.text.trim(),
+                                      passwordController.text.trim(),
+                                    );
+
+                                    if (!mounted) return;
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => HomePage(
+                                          token: token,
+                                          userId: 2,
+                                        ),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.toString())),
+                                    );
+                                  } finally {
+                                    setState(() => _isLoading = false);
+                                  }
+                                }
+                              },
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Masuk',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            );
-                          }
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            'Masuk',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                   ],

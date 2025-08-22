@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project/profile.dart';
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String token;
+  final int userId;
+
+  const HomePage({
+    super.key,
+    required this.token,
+    required this.userId,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
